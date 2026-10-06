@@ -92,6 +92,7 @@ only one run occurred. **The last score in your list must match the agreement li
 
 
 
+<!-- 
 | Check | Evidence | Pass condition | Weight |
 |---|---|---|---|
 |diagnosis  |## Issue  |passes if the plan says what causes the bug.  |required  |
@@ -107,7 +108,7 @@ only one run occurred. **The last score in your list must match the agreement li
 |diagnosis  |## Issue  |passes if the plan says what causes the bug.  |required  | (18/20)
 ->
 |diagnosis  |## Issue  |passes if the plan says what causes the bug and is supported by repro evidence |required  | (18/20)
-
+ -->
 
 **Package analysis**
 
