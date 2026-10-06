@@ -37,35 +37,6 @@ one), the outcome is stated honestly (an evidenced cannot-reproduce is
 a pass, a confident wrong-target is not), and the words respect the
 repo's conventions. A rubric that ignores a family will fail eval
 packages designed around that family.
-
-|AI Policy  |contribution policy  |Contribution policy does not ban the use of AI / Generative AI  |required |
-|Version Context  |Environment  |Includes the correct testing environment and version of the project which matches the issue, operating systems can be different |required  |
-|Input matches  |Steps to reproduce the issue, Reproduced  |The input for the issue matches the input of the repro  |required  |
-|Claim comment  |Thread highlights, Candidate claim comment  |Claim comment exists stating interest in the issue and a stating a dedication to test the
-issue  |preferred | 
-(15/20)
-
-
-+++
-|Output verdict  |Reproduced |Includes wether testing produced the same output as issue or was not able to reporoduce |required  | (16/20)
-
-
----
-|Version Context  |Environment  |Includes the correct testing environment and version of the project which matches the issue, operating systems can be different |required  | (17/20)
-
-
-|Claim comment  |Thread highlights, Candidate claim comment  |Claim comment exists stating interest in the issue and a stating a dedication to test the
-issue  |preferred | (17/20)
-->
-|Claim comment  |Thread highlights, Candidate claim comment  |Claim comment exists stating interest in the issue and a stating a dedication to test the issue  |required | (17/20)
-
-|AI Policy  |contribution policy  |Contribution policy does not ban the use of AI / Generative AI  |required | (17/20)
-->
-|AI Policy  |contribution policy, ## Thread highlights,  |Contribution policy or repo comments does not ban the use of AI / Generative AI  |required | (18/20)
-
-+++
-|Version Context  |Environment  |Includes the correct testing environment and version of the project which matches the issue, allows different version of packages and operating systems if called out in repro |required  |
-
 -->
 
 ## Checks

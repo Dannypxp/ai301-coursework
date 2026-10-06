@@ -27,6 +27,12 @@ yours off theirs.]
 permalink. **Then paste the text of that comment underneath the link** — the pasted text is
 what this field is graded on, so copy across what you actually posted.]
 
+https://github.com/codepath/pathreview-ai301-fa26-s3/issues/58#issuecomment-6008830926
+
+Plan for issue #58
+
+Reproduced issue with regex in bias_detector.py with missing common phrasing which outputs (False, ''), updating the dismissive and demographic patterns in bias_detector.py with missing words from the 9 failed tests in test_bias_detector.py will fix the failing tests and return (True, "Dismissive language about educational background"). I will provide the pr when the remaining 9 tests pass in test_bias_detector.py in branch fix/58-bias-detector-common-phrases.
+
 ---
 
 ## Your branch
@@ -38,10 +44,38 @@ naming shape is a type prefix, then the issue number, then a short description. 
 number in the branch name must be the number of the issue you claimed** — a name carrying
 any other number does not satisfy this field.]
 
+
+
 **Evidence**
 
 [Your Unit 2 reproduction steps re-run against the built change: the before, then the
 after. Paste both, including the commands you ran and their output.]
+
+
+ Environment - Docker 28.0.1, Macos 27.0, Python 3.11.15
+    Reproduction Steps -
+    cp .env.example .env
+    docker compose up -d
+    make setup
+    python3 -c "
+    from safety.bias_detector import BiasDetector
+    print(BiasDetector.detect_bias('The candidate only attended a bootcamp, so this project lacks the rigor of a formal CS education'))"
+    (False, '')
+
+    Expected - (True, "Dismissive language about educational background")
+
+    Actual - (False, '')
+
+    cp .env.example .env
+    docker compose up -d
+    make setup
+    python3 -c "
+    from safety.bias_detector import BiasDetector
+    print(BiasDetector.detect_bias('The candidate only attended a bootcamp, so this project lacks the rigor of a formal CS education'))"
+
+    Expected - (True, 'Dismissive language about educational background')
+
+    Actual - (True, 'Dismissive language about educational background')
 
 ## Eval iterations
 
