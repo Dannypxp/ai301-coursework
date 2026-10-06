@@ -21,6 +21,8 @@ the only thing that ties it to you. Several students may plan the same
 house issue, so this is what keeps their comments off your score and
 yours off theirs.]
 
+Dannypxp
+
 **Plan comment**
 
 [Link to the comment where you posted your plan on the issue. Use the comment's own
@@ -44,7 +46,7 @@ naming shape is a type prefix, then the issue number, then a short description. 
 number in the branch name must be the number of the issue you claimed** — a name carrying
 any other number does not satisfy this field.]
 
-
+fix/58-bias-detector-common-phrases
 
 **Evidence**
 
@@ -88,11 +90,32 @@ fields.
 only one run occurred. **The last score in your list must match the agreement line in the
 `eval-run.txt` you committed** — that file is the record of your final run.]
 
+
+
+| Check | Evidence | Pass condition | Weight |
+|---|---|---|---|
+|diagnosis  |## Issue  |passes if the plan says what causes the bug.  |required  |
+|scope   |## Candidate plan. ## Issue   |look where the plan says what it will change; passes if it names each file it will change and says what it won’t touch.  |required  |
+|test  |## Repro evidence  |passes if it provides the steps to test the issue  |required  |
+|comment  |## Candidate plan comment  |Comment properply explains how the plan is related to the issue  |Required  |
+(17/20)
+
++++
+|signals  |##Thread highlights, ##Repo facts  |comment follows issue template and AI contribution are not banned  |Required  |
+(18/20)
+
+|diagnosis  |## Issue  |passes if the plan says what causes the bug.  |required  | (18/20)
+->
+|diagnosis  |## Issue  |passes if the plan says what causes the bug and is supported by repro evidence |required  | (18/20)
+
+
 **Package analysis**
 
 [Pick one scored package (`pkg-01` through `pkg-20` — the four `calib-` packages are never
 scored). Name it by id, say what your rubric decided and what the gold label said, and
 explain why your rubric read it that way.]
+
+In pkg-03 the golden rubric decision is an accept, my rubric also agrees because the 5 checks passed with the plan is supported by repro evidence, scope is mentioned, tests are included for the fix, and the comment explains the plan in relation to the issue
 
 **Check rationale**
 
@@ -100,12 +123,20 @@ explain why your rubric read it that way.]
 Then say why it reads that way — what you revised to get there, or what you rejected in
 favour of it.]
 
+|diagnosis  |## Issue  |passes if the plan says what causes the bug and is supported by repro evidence |required  |
+
+The diagnosis check was altered with the line "is supported by repro evidence" because it helped reject issues which their plans did not have evidence/connection to the repro they have submitted
+
 **Trade-offs**
 
 [Every check gives something up. Any one of these is a complete answer: a package whose
 result it changes, a canary you re-ran with `--only`, a case you accept it will miss, or a
 stated reason nothing changed elsewhere. "Nothing changed, and here is how I know" earns
 the point in full when the reason follows.]
+
+|test  |## Repro evidence  |passes if it provides the steps to test the issue  |required  | 
+
+The test check is simple but easy to trick, it will also pass any repro with any type of test. For now making sure a repro has a test is enough.
 
 ---
 
