@@ -92,7 +92,7 @@ only one run occurred. **The last score in your list must match the agreement li
 
 
 
-<!-- 
+
 | Check | Evidence | Pass condition | Weight |
 |---|---|---|---|
 |diagnosis  |## Issue  |passes if the plan says what causes the bug.  |required  |
@@ -102,13 +102,28 @@ only one run occurred. **The last score in your list must match the agreement li
 (17/20)
 
 +++
+
+| Check | Evidence | Pass condition | Weight |
+|---|---|---|---|
+|diagnosis  |## Issue  |passes if the plan says what causes the bug.  |required  |
+|scope   |## Candidate plan. ## Issue   |look where the plan says what it will change; passes if it names each file it will change and says what it won’t touch.  |required  |
+|test  |## Repro evidence  |passes if it provides the steps to test the issue  |required  |
+|comment  |## Candidate plan comment  |Comment properply explains how the plan is related to the issue  |Required  |
 |signals  |##Thread highlights, ##Repo facts  |comment follows issue template and AI contribution are not banned  |Required  |
 (18/20)
 
-|diagnosis  |## Issue  |passes if the plan says what causes the bug.  |required  | (18/20)
+
 ->
-|diagnosis  |## Issue  |passes if the plan says what causes the bug and is supported by repro evidence |required  | (18/20)
- -->
+
+| Check | Evidence | Pass condition | Weight |
+|---|---|---|---|
+||diagnosis  |## Issue  |passes if the plan says what causes the bug and is supported by repro evidence |required  |
+|scope   |## Candidate plan. ## Issue   |look where the plan says what it will change; passes if it names each file it will change and says what it won’t touch.  |required  |
+|test  |## Repro evidence  |passes if it provides the steps to test the issue  |required  |
+|comment  |## Candidate plan comment  |Comment properply explains how the plan is related to the issue  |Required  |
+|signals  |##Thread highlights, ##Repo facts  |comment follows issue template and AI contribution are not banned  |Required  |
+
+ (18/20)
 
 **Package analysis**
 
