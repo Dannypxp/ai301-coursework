@@ -19,19 +19,14 @@ gets assembled) is a missing sentence here.
 
 One section is not yours: the JSON schema in "Verdict and output" is
 reproduced from CONTRACT.md verbatim and may not be altered. Your
-words decide everything around it.
+words decide everything around it. -->
 
+## The question
 
-You are grading one plan package to answer a single question: is this
-ready to post and build from? A package is a candidate plan and a
-candidate plan comment, read against the issue they belong to and the
-reproduction evidence that plan builds on. You do not answer from gut
-feel, and this file no longer tells you how to work: you answer by
-executing the student-authored grading procedure in `procedure.md`,
-which applies the rubric in `rubric.md` to evidence gathered per
-`references/evidence-guide.md`.
-
--->
+<!-- State, in your words, the one question this tool answers and what
+a PR package is: what artifacts it contains and what they are read
+against. CONTRACT.md fixes the question; your frame has to say it so
+the tool cannot wander into grading something else. -->
 
 Your are grading a candidate pull request to answer a single question: 
 is this ready to submit? A pull request is a candidates submission to a 
@@ -40,14 +35,6 @@ too. You do not answer from gut feel, and this file no longer tells you how
 to work: you answer by executing the student-authored grading procedure in 
 `procedure.md`, which applies the rubric in `rubric.md` to evidence gathered 
 per `references/evidence-guide.md`.
-
-
-## The question
-
-<!-- State, in your words, the one question this tool answers and what
-a PR package is: what artifacts it contains and what they are read
-against. CONTRACT.md fixes the question; your frame has to say it so
-the tool cannot wander into grading something else. -->
 
 ## Inputs and modes
 
@@ -59,7 +46,31 @@ everything the branch changes relative to the repo's default branch:
 `git diff main...HEAD` (three dots), run from the working copy, is
 the command that produces it; name the source that concretely. Eval
 mode: state that the bundle is the whole world, nothing is fetched,
-and every check runs with the full verdict rule. -->
+and every check runs with the full verdict rule. 
+-->
+
+One of:
+
+- **Live mode**: the student's own 'plan.md' and draft pr, plus their
+  issue's URL. Gather the issue-side evidence live (via
+  `gh`, the GitHub API, or the web; `references/evidence-guide.md`
+  says where each signal lives), and take the reproduction evidence
+  from the student's branch diff, draft pr title, description, test 
+  evidence and issue. A student on the house issue
+  has no posted repro comment of their own: there, the reproduction
+  evidence is the house repro pack as quoted in the drafts, and if the
+  drafts quote no repro evidence at all, that absence is what the
+  relevant checks grade. Read the drafts the way a
+  maintainer on the thread will read the posted comment: the package
+  is what the drafts contain and quote, not other files in the
+  student's working directory.
+
+- **Eval mode**: a package bundle (a markdown file containing the
+  Repo facts, Issue, Thread highlights, Plan Context, Candidate PR, ). Use ONLY the bundle
+  text as evidence. Do not fetch anything; the bundle is the whole
+  world. Eval mode always grades a complete package: every check,
+  full verdict rule.
+
 
 ## The scope seam (live mode only)
 
@@ -67,14 +78,38 @@ and every check runs with the full verdict rule. -->
 finds there, what to refuse, and what to do when the scope's repo line
 is an unfilled placeholder. State that eval mode ignores scope.md
 entirely. CONTRACT.md names the required behavior; your frame has to
-instruct it. -->
+instruct it. 
+
+-->
+
+
+In live mode, read `scope.md` in this skill directory before anything
+else. It names where the student's issue must live and the house rules
+that apply there; a house rule changes how evidence is read in that
+environment. Refuse to grade a package for an issue outside the scoped
+source. If the scope's repo line still carries an unfilled placeholder,
+stop without grading and tell the student to get their cohort's scope
+file from the instructor; never guess a scope. In eval mode, ignore
+`scope.md` entirely. CONTRACT.md names the required behavior.
+
 
 ## The voice seam (live mode only)
 
 <!-- Tell the tool when to read voice-guide.md, which outgoing text it
 gates (the PR title and description), how to report a broken rule, and
 why it never changes the verdict on its own. State that eval mode
-ignores it entirely. -->
+ignores it entirely.
+
+ -->
+
+In live mode, also read `voice-guide.md`: the student's own rules for
+how they write upstream, with wrong/right examples. Check the pr title 
+and description against those rules and report any rule the draft breaks
+in the summary, quoting the rule. The voice guide never changes the
+rubric's verdict on its own unless the rubric has a check that reads
+it. In eval mode, ignore `voice-guide.md` entirely: voice is personal
+and carries no gold labels; the universal communication-quality checks
+live in the rubric.
 
 ## Component reads
 
@@ -85,6 +120,16 @@ what the tool does when the procedure is silent on a step (report the
 gap, never improvise around it) and what it does when rubric.md or
 procedure.md has no content (the refusal rule, stated as an
 instruction). -->
+
+rubric.md defines the checks and the verdict rule. 
+evidence-guide.md maps where each evidence family lives.
+procedure.md is executed as written. When procedure is silent on a step, 
+report the gap and never improvise around it.
+If `rubric.md` has no checks filled in, or `procedure.md` has no steps
+filled in, stop and say so: this skill cannot grade without a rubric
+AND a procedure, and that is by design. The rubric, the evidence
+guide, and the procedure are the parts the student writes; the voice
+guide carries over from week 2.
 
 ## Verdict and output
 
@@ -110,4 +155,23 @@ CONTRACT.md's, verbatim; do not edit it. -->
 grade the thing not the polish, the rubric decides, the procedure
 decides how, and how unclear grades are treated when the rubric's
 verdict rule is silent. CONTRACT.md states each as a guarantee; your
-frame has to make them instructions. -->
+frame has to make them instructions. 
+-->
+
+- Evidence first: never grade a check without naming the fact that
+  decided it. "Looks fine" is not evidence.
+- Grade the plan, not the polish: a terse complete plan can be ready
+  and a long confident one can be unbuildable or wrong. Every check
+  reads the thing itself against the issue and its repro evidence,
+  never the formatting.
+- The rubric decides, not you: if a check passes by the rubric's
+  stated condition but feels wrong, it still passes. Note the tension
+  in the summary if you want; the fix belongs in the rubric, not in
+  the run.
+- The procedure decides how, not you: follow `procedure.md` as
+  written, and report its gaps instead of papering over them.
+- Treat `unclear` as the rubric's verdict rule directs. If the rule
+  does not say, treat `unclear` as `fail`: a plan you cannot verify
+  from the package is a plan that is not ready to build from.
+- CONTRACT.md states each as a guarantee
+
