@@ -31,3 +31,5 @@ risks and unknowns - how the bias_detector works like breaking down a sentence
 ## deviations
 
 At first I didn't think I had to touch test_bias_detector.py but after finding the root cause, I also realized I had to remove the xfail markers to properly get the right output.
+
+I also found that the repro sentence ("...lacks the rigor of a formal CS education") isn't matched by any existing pattern or by the 9 xfail tests, so I added one Dismissive pattern for that phrasing in bias_detector.py.
