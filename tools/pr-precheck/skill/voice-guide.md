@@ -64,3 +64,48 @@ toward new ones (claiming coverage the evidence does not show is the
 classic). -->
 
 I can write the report today, please give me the issue, give me two hours, I want this issue, claimed, the bug is still present, I can fix the bug
+
+
+## Upstream: how I talk to maintainers
+
+### Claims I post
+
+#### Rule: Appropriate Timeframe
+
+Do not promise a strict and early timeframe, give interest and promise to provide the requested fix in a appropriate manner
+
+- Wrong: "I will provide the fix in 3 hours"
+- Right: "I am interested in this issue a will provide an artifact to test the fix for the issue"
+
+#### Rule: Basics
+
+Do not write simple claims or comments showing interest in the issue
+
+- Wrong: "I want the issue"
+- Right: "I am interested in this issue and will provide a PR with the fix"
+
+### Questions I ask
+
+<!-- 1-2 rules. What a question of yours must carry before it goes
+up: answerable from the maintainer's chair, what you already tried,
+one question rather than five. -->
+
+#### Rule: AI Usage
+
+If AI Usage is not mentioned in any comments or documentation relating to contributing to the project
+
+- Wrong: "Can I use Claude"
+- Right: "What is the procedure with contributing with the assistance of AI Tools"
+
+### Pings I send
+
+<!-- 1 rule is enough. When you nudge and how it sounds: measured
+against the repo's own reply rhythm, never your clock, and never
+pressure dressed as politeness. -->
+
+#### Rule: Check-up
+
+Following other reply timings in the same repo, send a reminder for the interest in the issue
+
+- Wrong: "Can You reply to my issue claim"
+- Right: "I am still interested in providing a pr for this issue  "

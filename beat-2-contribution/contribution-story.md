@@ -8,10 +8,9 @@ format criteria grade exactly that. Your course repo link is the whole submissio
 files and no evidence uploads are part of Assignment 5.
 
 **Contribution Number:** [1]
-**Student:** [Student name]
-**GitHub Username:** [your GitHub username, exactly as it appears on your profile - no @, no
-profile URL. Your comments upstream are identified by this name.]
-**Issue:** [GitHub issue link]
+**Student:** Daniel Vivar
+**GitHub Username:** Dannypxp
+**Issue:** https://github.com/marketcalls/openalgo/issues/1853
 **Pull Request:** [GitHub PR link, once opened]
 
 One repository, built across units 5 to 8, telling the whole story of your real
@@ -60,11 +59,18 @@ one in the week it belongs to.
 [2-4 sentences: what you built (the scout, your strategy), what broke
 or fell short, what changed because of it.]
 
+Built the Issue Scout to search for an issue on github that matches my rubric which explains what type of work I am interested and comfortable with. This work includes the language python and focusing on security aspects of projects to align my cybersecurity career. Originally my rubric was missing a couple key checks which did not allow my tool to work the first time, adding the Issue Open check made to sure to properly only approve issues that were not closed or taken by another coder. 
+
 **Unit 6: [one line on the tool work]**
 
 [2-4 sentences: the voice-guard, the repo-memory file. What broke or
 fell short, and what changed because of it. "Nothing broke" counts when
 it is true - say how you know.]
+
+The Voice guard and repo-memory file both worked well, while submitting the claim comment it was
+ stopped by the voice gaurd for the containing the specific versions of the packages and the operating system.
+ The repo-memory file helps alot aswell because it helps claude remember the repo everytime it is re-opened and 
+ stays in the bounds of the repos rules.
 
 **Unit 7: [one line on the tool work]**
 
@@ -91,13 +97,28 @@ you it held up. **Record the link to your claim comment in this section too.**
 Not claimed yet? Write `claim pending` and today's date where the link goes,
 and add the link the moment your claim lands.]
 
+When searching for my issue, Using the class provided repo search tool I first looked for security related 
+repos to match my background in cybersecurity. Running the scan on the issue produced an accept for the issue 
+because the scope is for a first contribution and doesnt include languages i specified against. 
+The issue scout held up great for the issue because it made sure the issue was open and was apart of an active 
+repo by checking when the maintainer last replied or interacted with pull requests.
+
+https://github.com/marketcalls/openalgo/issues/1853#issuecomment-6460612247
+
 **Toolkit**
 
-- Tool: issue-scout (your scout: your search strategy, your rubric),
-  and how you used it
-- What it produced: [the scan and its verdict on this issue, described]
-- Difficulties: [where it fell short, or "none met" if none did]
-- What changed: [what you patched or would update, or "nothing"]
+- Tool: issue-scout (your scout: The search strategy was to find active repo's with specific activity from the maintainers and activity with merging repos, 
+Check	Evidence	Pass condition	Weight
+Repo Merge	last push to any branch	last merge under 2 months old	required
+Maintainer Reply	maintainer first-response sample	last reply by a maintainer under 2 weeks	preferred
+Other Active Issues	open issues + PRs	other issues are active	required
+Issue Open	the issue	issue is currently open	required
+scope-feasible	issue body: the work it asks for	one identifiable piece of work someone could start; fails only for a codebase-wide checklist, an "improve X everywhere", or a container issue tracking many sub-tasks	required
+)
+- What it produced: The scan produced an accept verdict and made sure it was an active repo to commit to. It checked 
+how recent the a repo was merged, if the maintainer replies to any issue and if any other issues are currently active.
+- Difficulties: "none met"
+- What changed: "nothing
 
 ---
 
