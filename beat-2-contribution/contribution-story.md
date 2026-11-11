@@ -63,10 +63,6 @@ Built the Issue Scout to search for an issue on github that matches my rubric wh
 
 **Unit 6: [one line on the tool work]**
 
-[2-4 sentences: the voice-guard, the repo-memory file. What broke or
-fell short, and what changed because of it. "Nothing broke" counts when
-it is true - say how you know.]
-
 The Voice guard and repo-memory file both worked well, while submitting the claim comment it was
  stopped by the voice gaurd for containing the specific versions of the packages and the operating system.
  The repo-memory file helps alot aswell because it helps claude remember the repo everytime it is re-opened and 
@@ -74,17 +70,17 @@ The Voice guard and repo-memory file both worked well, while submitting the clai
 
 **Unit 7: ship-gate: PASS. fix/207-timestamp-security-version-zmq-message-format passed your manifest's checks and your pr-precheck. Open the PR through Claude Code within 30 minutes, without changing anything, and the ship-gate lets it through without running again.**
 
-[2-4 sentences: the ship-gate and your gate manifest. What it produced
-on your real branch, what fought you, what changed because of it.]
-
  The ship-gate and gate manifest produced a pass after a couple of tries because I accidently had multiple branches and kept accidently scanning the wrong one. But it also fought me on the order of commands to run in the repo before a pr, the venv environment command was in the wrong order. Ship-gate did scan my pr for the scope and what files were changed in the repo and wether my work actually followed my fix plan.
 
 
-**Unit 8: [one line on the tool work]**
+**Unit 8: pr-monitor: drafted move (No nudge yet. Wait note only. (via the polite nudge form)) -> /Users/danny/.claude/pr-monitor/drafted-move.md**
 
 [2-4 sentences: the PR-monitor and your playbook. What it read, what it
 drafted, what you did with the draft.]
 
+The PR-monitor was ran on my pull request and produced a wait verdict because it has been only one day since the pull request was pushed. The playbook was written to check in 
+after a week of silence because the merges were consistantly only a couple of days, aswell the tone in the nudge and thank you sections were friendly and grateful because the maintainer has been 
+supportful and quick to respond during this journey.
 ---
 
 ## Why I Chose This Issue
