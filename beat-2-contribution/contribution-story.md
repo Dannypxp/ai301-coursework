@@ -11,7 +11,7 @@ files and no evidence uploads are part of Assignment 5.
 **Student:** Daniel Vivar
 **GitHub Username:** Dannypxp
 **Issue:** https://github.com/hololinked-dev/hololinked/issues/207
-**Pull Request:** [GitHub PR link, once opened]
+**Pull Request:** https://github.com/hololinked-dev/hololinked/pull/217
 
 One repository, built across units 5 to 8, telling the whole story of your real
 contribution. Fill it as you work, not at the end — the sections below ask for evidence that
@@ -377,19 +377,20 @@ plan-check produced a pass for my plan and I gave the go ahead to claude to exec
 
 **PR Link:** https://github.com/hololinked-dev/hololinked/pull/217
 
-**PR Description:** The fix adds the timestamp, version and authorization fields to the request and response headers of zmq messages. The version is checked at the handshake, a mismatch is refused with a ConnectionRefusedError on the server and the client gets the same error instantly instead of waiting 60 seconds for a timeout. Updated the request and response message schemas with the new fields, which also documents them for both sides. Adds tests for the header fields and for matching and mismatching versions at the handshake step.
+**PR Description:** 
+The fix adds the timestamp, version and authorization fields to the request and response headers of zmq messages. The version is checked at the handshake, a mismatch is refused with a ConnectionRefusedError on the server and the client gets the same error instantly instead of waiting 60 seconds for a timeout. Updated the request and response message schemas with the new fields, which also documents them for both sides. Adds tests for the header fields and for matching and mismatching versions at the handshake step, for both the sync and async clients.
 
 Fixes #207
 
 Differences from the plan I posted in the issue:
+- The version check is also added to AsyncZMQClient._handshake, with a shared BaseZMQClient.verify_handshake_response method in brokers.py. The async client would otherwise keep retrying for 60 seconds against a server that refuses it. The async handshake runs in the background, so the error is not raised to the caller from handshake(). The tests call AsyncZMQClient._handshake directly to check it.
+- The server raises the ConnectionRefusedError in AsyncZMQServer._handshake and sends it with the existing _handle_error_message. The client maps it back with the existing raise_local_exception.
+- Only timestamp and authorization were agreed in the thread to start with, version and the handshake check are included as well because the issue asks for them.
+- The `# noqa: DOC501` on the _handshake docstring is there because ruff flags the exception raised inside it.
 
-The version check is also added to AsyncZMQClient._handshake, with a shared BaseZMQClient.verify_handshake_response method in brokers.py. The async client would otherwise keep retrying for 60 seconds against a server that refuses it. The async handshake runs in the background, so the error is not raised to the caller there and I did not test that path.
-The server raises the ConnectionRefusedError in AsyncZMQServer._handshake and sends it with the existing _handle_error_message. The client maps it back with the existing raise_local_exception.
-Only timestamp and authorization were agreed in the thread to start with, version and the handshake check are included as well because the issue asks for them.
-The # noqa: DOC501 on the _handshake docstring is there because ruff flags the exception raised inside it.
 Tested on macOS 27.2, Python 3.11.15, on top of upstream main a90817d.
 
-Before Fix
+## Before Fix
 
 test_header_variables.py (the script from my repro comment on the issue)
 
@@ -401,20 +402,21 @@ RequestHeader senderID <class 'str'> True NODEFAULT
 RequestHeader receiverID <class 'str'> True NODEFAULT
 RequestHeader serverExecutionContext <class 'hololinked.core.eventloop.operations.SchedulerExecutionContext'> False NODEFAULT
 RequestHeader thingExecutionContext <class 'hololinked.core.eventloop.operations.ThingExecutionContext'> False NODEFAULT
-RequestHeader thingID str | None False
-RequestHeader objekt str | None False
-RequestHeader operation str | None False
+RequestHeader thingID str | None False 
+RequestHeader objekt str | None False 
+RequestHeader operation str | None False 
 RequestHeader payloadContentType str | None False application/json
 RequestHeader preencodedPayloadContentType str | None False text/plain
+
 
 ResponseHeader messageType <class 'str'> True NODEFAULT
 ResponseHeader messageID <class 'str'> True NODEFAULT
 ResponseHeader receiverID <class 'str'> True NODEFAULT
 ResponseHeader senderID <class 'str'> True NODEFAULT
 ResponseHeader payloadContentType str | None False application/json
-ResponseHeader preencodedPayloadContentType str | None False
+ResponseHeader preencodedPayloadContentType str | None False 
 
-After Fix
+## After Fix
 
 test_header_variables.py
 
@@ -426,49 +428,51 @@ RequestHeader senderID <class 'str'> True NODEFAULT
 RequestHeader receiverID <class 'str'> True NODEFAULT
 RequestHeader serverExecutionContext <class 'hololinked.core.eventloop.operations.SchedulerExecutionContext'> False NODEFAULT
 RequestHeader thingExecutionContext <class 'hololinked.core.eventloop.operations.ThingExecutionContext'> False NODEFAULT
-RequestHeader thingID str | None False
-RequestHeader objekt str | None False
-RequestHeader operation str | None False
+RequestHeader thingID str | None False 
+RequestHeader objekt str | None False 
+RequestHeader operation str | None False 
 RequestHeader payloadContentType str | None False application/json
 RequestHeader preencodedPayloadContentType str | None False text/plain
 RequestHeader timestamp <class 'int'> False NODEFAULT
 RequestHeader version <class 'str'> False v1
-RequestHeader authorization <class 'str'> False
+RequestHeader authorization <class 'str'> False 
+
 
 ResponseHeader messageType <class 'str'> True NODEFAULT
 ResponseHeader messageID <class 'str'> True NODEFAULT
 ResponseHeader receiverID <class 'str'> True NODEFAULT
 ResponseHeader senderID <class 'str'> True NODEFAULT
 ResponseHeader payloadContentType str | None False application/json
-ResponseHeader preencodedPayloadContentType str | None False
+ResponseHeader preencodedPayloadContentType str | None False 
 ResponseHeader timestamp <class 'int'> False NODEFAULT
 ResponseHeader version <class 'str'> False v1
-ResponseHeader authorization <class 'str'> False
+ResponseHeader authorization <class 'str'> False 
+
 
 tests/integration/server/zmq/test_06_message_version.py
 
 Expected: header fields are set, matching version connects, mismatching version raises ConnectionRefusedError instantly
 Actual:
-tests/integration/server/zmq/test_06_message_version.py::test_01_request_header_has_timestamp_version_and_authorization PASSED [ 16%]
-tests/integration/server/zmq/test_06_message_version.py::test_02_response_header_has_timestamp_version_and_authorization PASSED [ 33%]
-tests/integration/server/zmq/test_06_message_version.py::test_03_handshake_with_matching_version PASSED [ 50%]
-tests/integration/server/zmq/test_06_message_version.py::test_04_handshake_with_mismatching_version_is_refused_instantly PASSED [ 66%]
-tests/integration/server/zmq/test_06_message_version.py::test_05_client_refuses_server_with_mismatching_version PASSED [ 83%]
-tests/integration/server/zmq/test_06_message_version.py::test_06_handshake_works_again_after_refusal PASSED [100%]
+tests/integration/server/zmq/test_06_message_version.py::test_01_request_header_has_timestamp_version_and_authorization PASSED                      [ 12%]
+tests/integration/server/zmq/test_06_message_version.py::test_02_response_header_has_timestamp_version_and_authorization PASSED                     [ 25%]
+tests/integration/server/zmq/test_06_message_version.py::test_03_handshake_with_matching_version PASSED                                             [ 37%]
+tests/integration/server/zmq/test_06_message_version.py::test_04_handshake_with_mismatching_version_is_refused_instantly PASSED                     [ 50%]
+tests/integration/server/zmq/test_06_message_version.py::test_05_client_refuses_server_with_mismatching_version PASSED                              [ 62%]
+tests/integration/server/zmq/test_06_message_version.py::test_06_handshake_works_again_after_refusal PASSED                                        [ 75%]
+tests/integration/server/zmq/test_06_message_version.py::test_07_async_client_handshake_with_matching_version PASSED                              [ 87%]
+tests/integration/server/zmq/test_06_message_version.py::test_08_async_client_handshake_with_mismatching_version_is_refused_instantly PASSED    [100%]
 
-The existing zmq unit and integration tests also pass, 44 in total.
+The existing zmq unit and integration tests also pass, 46 in total.
+
 
 AI disclosure: Claude helped with understanding the logic behind zmq messaging and creating tests for the version check in the handshake request. I reviewed the changes and can explain them.
 
+
 **Maintainer Feedback:**
 
-- [Date]: [feedback received, or "none yet"; silence is a normal
-  state and costs you nothing]
-- [Date]: [how you addressed it]
+- 11/11/2026: none yet
 
-**Status:** [Awaiting review / Iterating / Merged / Closed. The
-status is a fact you record, never a grade: the PR is graded as
-opened.]
+**Status:** 
 
 Awaiting review
 
