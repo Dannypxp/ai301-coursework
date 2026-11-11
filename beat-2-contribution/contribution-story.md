@@ -72,10 +72,13 @@ The Voice guard and repo-memory file both worked well, while submitting the clai
  The repo-memory file helps alot aswell because it helps claude remember the repo everytime it is re-opened and 
  stays in the bounds of the repos rules.
 
-**Unit 7: [one line on the tool work]**
+**Unit 7: ship-gate: PASS. fix/207-timestamp-security-version-zmq-message-format passed your manifest's checks and your pr-precheck. Open the PR through Claude Code within 30 minutes, without changing anything, and the ship-gate lets it through without running again.**
 
 [2-4 sentences: the ship-gate and your gate manifest. What it produced
 on your real branch, what fought you, what changed because of it.]
+
+ The ship-gate and gate manifest produced a pass after a couple of tries because I accidently had multiple branches and kept accidently scanning the wrong one. But it also fought me on the order of commands to run in the repo before a pr, the venv environment command was in the wrong order. Ship-gate did scan my pr for the scope and what files were changed in the repo and wether my work actually followed my fix plan.
+
 
 **Unit 8: [one line on the tool work]**
 
