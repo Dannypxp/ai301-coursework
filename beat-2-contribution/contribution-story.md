@@ -10,7 +10,7 @@ files and no evidence uploads are part of Assignment 5.
 **Contribution Number:** [1]
 **Student:** Daniel Vivar
 **GitHub Username:** Dannypxp
-**Issue:** https://github.com/marketcalls/openalgo/issues/1853
+**Issue:** https://github.com/hololinked-dev/hololinked/issues/207
 **Pull Request:** [GitHub PR link, once opened]
 
 One repository, built across units 5 to 8, telling the whole story of your real
@@ -59,7 +59,7 @@ one in the week it belongs to.
 [2-4 sentences: what you built (the scout, your strategy), what broke
 or fell short, what changed because of it.]
 
-Built the Issue Scout to search for an issue on github that matches my rubric which explains what type of work I am interested and comfortable with. This work includes the language python and focusing on security aspects of projects to align my cybersecurity career. Originally my rubric was missing a couple key checks which did not allow my tool to work the first time, adding the Issue Open check made to sure to properly only approve issues that were not closed or taken by another coder. 
+Built the Issue Scout to search for an issue on github that matches my rubric which explains what type of work I am interested and comfortable with. This work includes the language python and focusing on security aspects of projects to align with my cybersecurity career. Originally my rubric was missing a couple key checks which did not allow my tool to work the first time, adding the Issue Open check made sure to properly only approve issues that were not closed or taken by another coder. 
 
 **Unit 6: [one line on the tool work]**
 
@@ -68,7 +68,7 @@ fell short, and what changed because of it. "Nothing broke" counts when
 it is true - say how you know.]
 
 The Voice guard and repo-memory file both worked well, while submitting the claim comment it was
- stopped by the voice gaurd for the containing the specific versions of the packages and the operating system.
+ stopped by the voice gaurd for containing the specific versions of the packages and the operating system.
  The repo-memory file helps alot aswell because it helps claude remember the repo everytime it is re-opened and 
  stays in the bounds of the repos rules.
 
@@ -100,11 +100,10 @@ and add the link the moment your claim lands.]
 When searching for my issue, Using the class provided repo search tool I first looked for security related 
 repos to match my background in cybersecurity. Running the scan on the issue produced an accept for the issue 
 because the scope is for a first contribution and doesnt include languages i specified against. 
-The issue scout held up great for the issue because it made sure the issue was open and was apart of an active 
+The issue scout held up great for the issue because it made sure it was still open and was apart of an active 
 repo by checking when the maintainer last replied or interacted with pull requests.
 
-https://github.com/marketcalls/openalgo/issues/1853#issuecomment-6460612247
-
+https://github.com/hololinked-dev/hololinked/issues/207#issuecomment-6564112110
 **Toolkit**
 
 - Tool: issue-scout (your scout: The search strategy was to find active repo's with specific activity from the maintainers and activity with merging repos, 
@@ -128,24 +127,27 @@ how recent the a repo was merged, if the maintainer replies to any issue and if 
 
 [In your own words, what is broken or missing?]
 
+Adding fields to a ZMQ Message header which incluve authorization, version and timestamp. Aswell, updating the zmq messaging docoumentation to explain the new fields
+
 **Expected Behavior**
 
-[What should happen?]
+Messages now sent using the ZMQ format should include the timestamp of the server and object communication, authorization field for future iplementation of api keys and a version field which rejects any connection without the matching version and raises and error before timeout
 
 **Current Behavior**
 
-[What actually happens?]
+Messages sent using the ZMQ Format hold various different fields in the header like 
+messageType, messageID, senderID, receiverID, serverExecutionContext, thingExecutionContext, thingID, objekt, operation, payloudContentType, preencodedPayloadContentType
 
 **Affected Components**
 
-[Which parts of the codebase are involved?]
+Ther part of the codebase that is involvled is the zmq messaging which includes the files server/zmq/message.py, server/zmq/request_message_header_schema.josn, server/zmq/response_message_header_schema.josn
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: Ship-gate
+- What it produced: It produces a valid PR when all checks that I have iplemented into the ship-gate from the contributing.md of the repo.
+- Difficulties: N/A
+- What changed: Adding both scripts for the tests and ruff check that has to occur before submitting a pr
 
 ---
 
@@ -158,15 +160,58 @@ the relevant versions (language, runtime, package manager, the project
 itself), and how you set the project up. Then the challenges you faced
 and how you solved them, or that none came up.]
 
+Operating System: MacOs 27.2
+Python: 3.11.15
+
+1. Clone hololinked-main v0.4.2
+2. Open Folder in VSCode
+3. In root directory, 
+run - 
+uv venv (if venv is not installed (brew install uv))
+source .venv/bin/activate
+uv sync
+4. Installation is succesful
+
+
 **Steps to Reproduce**
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. Create python test file "test_header_variables.py"
+2. paste script to test the header fields
+
+import msgspec
+from hololinked.server.zmq.message import RequestHeader, ResponseHeader
+
+for cls in (RequestHeader, ResponseHeader):
+    for f in msgspec.structs.fields(cls):
+        print(cls.__name__, f.name, f.type, f.required, f.default)
+
+3. Run script with 'python3 test_header_variables.py'
+
+4. Result
+
+RequestHeader messageType <class 'str'> True NODEFAULT
+RequestHeader messageID <class 'str'> True NODEFAULT
+RequestHeader senderID <class 'str'> True NODEFAULT
+RequestHeader receiverID <class 'str'> True NODEFAULT
+RequestHeader serverExecutionContext <class 'hololinked.core.eventloop.operations.SchedulerExecutionContext'> False NODEFAULT
+RequestHeader thingExecutionContext <class 'hololinked.core.eventloop.operations.ThingExecutionContext'> False NODEFAULT
+RequestHeader thingID str | None False 
+RequestHeader objekt str | None False 
+RequestHeader operation str | None False 
+RequestHeader payloadContentType str | None False application/json
+RequestHeader preencodedPayloadContentType str | None False text/plain
+ResponseHeader messageType <class 'str'> True NODEFAULT
+ResponseHeader messageID <class 'str'> True NODEFAULT
+ResponseHeader receiverID <class 'str'> True NODEFAULT
+ResponseHeader senderID <class 'str'> True NODEFAULT
+ResponseHeader payloadContentType str | None False application/json
+ResponseHeader preencodedPayloadContentType str | None False 
+
+This script proves the timestamp, authorization and version fields do not exist
 
 **Reproduction Evidence**
 
-- **Commit showing reproduction:** [link to commit in your fork]
+- **Commit showing reproduction:** none
 - **Screenshots/logs:** [if applicable]
 - **My findings:** [what you discovered during reproduction; an
   honest, evidenced cannot-reproduce that led you to re-pick or ask
@@ -174,10 +219,10 @@ and how you solved them, or that none came up.]
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: repro-check
+- What it produced: It produced a verdict whether my repro draft accuratly followed the statements made in my claim comment and wether the issue was properly reproduced/tested
+- Difficulties: No difficulties was present while running the claude skill, it provided helpful information about the files I will be working on and if my claims were true about my findings during testing.
+- What changed: The toolkit was not changed while scanning my repro draft.
 
 ---
 
@@ -185,29 +230,32 @@ and how you solved them, or that none came up.]
 
 **Analysis**
 
-[Your analysis of the root cause: what is causing the issue, traced
-to the files and functions involved.]
+hololinked/server/zmq/message.py shows both RequestHeader and ResponseHeader classes are missing the timestamp, version and authorization fields. To implement my changes I will have to update the file hololinked/server/zmq/message.py which includes both the request and response header for zmq messages. I will need to add the new fields as strings and an int, which include the timestamp, authorization and version fields.
 
 **Proposed Solution**
 
-[High-level description of your fix approach, and what you are
-deliberately NOT changing.]
+I'm going to add the new fields in the message.py file in the RequestHeader and ResponseHeader class which also already includes various different fields. Furthermore, update the hololinked-main/hololinked/server/zmq/request_message_header_schema.json and hololinked-main/hololinked/server/zmq/response_message_header_schema.json with the new fields and written explanations. Furthermore, to enforce the version check at the handshake level I will need to add the version check in brokers.py in the AsyncZMQServer._handshake and SyncZMQClient.handshake class. Not changing any other file in the zmq folder.
 
 **Implementation Plan**
 
-1. [Modify file X to do Y]
-2. [Add or change Z]
-3. [Update tests]
+1. Create a template for fields timestamp, version and authorization
+2. Create authorization field as a string and empty, nothing needs to be implemented inside the header
+3. Create the timestamp field with a python function which records the exact time communication between the server and client occur, with microsecond precision
+4. Create the version field, enforce at handshake and raise error if version does not match for the server and client, a ConnectionRefusedError would be raised instantly on the server instead of waiting 60 seconds for a ConnectionTimeout error.
+5. Update the request and response message header schema with the new fields
+6. Add the version check to hololinked-main/hololinked/server/zmq/brokers.py in AsyncZMQServer._handshake and SyncZMQClient.handshake classes. I will enforce a server side ConnectionRefusedError if the versions don't match.
+7. Create tests for ZMQ messaging with both the matching and mismatch contract versions. A new file zmq_message_version_test.py will test the mismatch and is expected to produce a ConnectionRefusedError and the match case is expected to produce an error-free connection.
+
 
 [Record deviations here as they happen: what changed mid-build and
 why. A recorded deviation is honest work; silent drift is not.]
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: plan-check
+- What it produced: Produced a verdict which informed me if my plan followed my previous comments on the issues page. Aswell, the checks in my plan-check skill made sure to see if I acknowledge the correct diagnosis for the issue, mention all the files I will edit, if a repro comment has an expected outcome and if AI code is allowed in the repo.
+- Difficulties: The checks in plan-check are more effective for issues with clear errors and less for issues with new features/additions. 
+- What changed: plan-check was not changed.
 
 ---
 
